@@ -475,6 +475,28 @@ body[data-locked="1"]{overflow:hidden}
 .bar--us .bar__fill{background:linear-gradient(90deg,var(--accent-deep),var(--accent-bright))}
 .bar--us .bar__val{color:var(--accent-bright)}
 
+/* Full-bleed image band — bleeds into the section instead of sitting in a box */
+.band{position:relative;margin-top:clamp(34px,5vw,60px);height:clamp(300px,36vw,460px);
+  overflow:hidden;isolation:isolate}
+.band img{position:absolute;left:0;top:-9%;width:100%;height:118%;
+  object-fit:cover;object-position:50% 38%;will-change:transform}
+.band__cap{position:absolute;left:0;right:0;bottom:clamp(18px,3vw,32px);z-index:2;
+  font-size:.9rem;line-height:1.45;color:var(--fg-mid);max-width:min(var(--maxw),100%);
+  text-shadow:0 1px 14px rgba(0,0,0,.85)}
+.band__cap::before{content:"";display:block;width:26px;height:1.5px;border-radius:1px;
+  background:var(--warn);margin-bottom:12px}
+@media(max-width:640px){.band__cap{font-size:.82rem}}
+.band::after{content:"";position:absolute;inset:0;pointer-events:none;background:
+  linear-gradient(180deg,var(--bg-elev) 0%,rgba(15,17,20,0) 26%,rgba(15,17,20,.55) 74%,var(--bg-elev) 100%),
+  linear-gradient(90deg,var(--bg-elev) 0%,rgba(15,17,20,0) 16%,rgba(15,17,20,0) 84%,var(--bg-elev) 100%)}
+
+/* Silicon substrate under the coverage grid */
+.cover__tex{position:absolute;inset:0;z-index:0;pointer-events:none;opacity:.40;
+  background:url("../chip.webp") 50% 46%/cover no-repeat;
+  mask-image:radial-gradient(ellipse 92% 58% at 50% 74%,#000 0%,rgba(0,0,0,.5) 46%,transparent 82%);
+  -webkit-mask-image:radial-gradient(ellipse 92% 58% at 50% 74%,#000 0%,rgba(0,0,0,.5) 46%,transparent 82%)}
+.cover__heads,.cover__grid{position:relative;z-index:1}
+
 /* RISKS */
 .risk{display:grid;grid-template-columns:1.02fr 1.28fr;gap:clamp(18px,3vw,52px);
   padding:clamp(26px,3.4vw,40px) 0;border-top:1px solid var(--line);align-items:start}
@@ -543,6 +565,7 @@ footer{border-top:1px solid var(--line);padding-block:44px 56px;font-size:.875re
   .ui .pop{transition:opacity .25s linear;transform:none}
   .bar__fill,.runrow__fill{transition:width .3s linear}
   .btn:active,.card:hover{transform:none}
+  .band img{transform:none !important}
   .sheet,.sheet a{transition:opacity .2s linear !important;transform:none !important}
   .nav__toggle .l1,.nav__toggle .l2{transition:none}
 }
@@ -664,6 +687,11 @@ footer{border-top:1px solid var(--line);padding-block:44px 56px;font-size:.875re
     <p class="runnote rv"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#g-warn"/></svg>
       Les lignes orange, ce sont des humains. Un designer senior tranche la direction et jette ce qui sent le généré. Un ingénieur senior relit le code avant de le merger. Rien ne part chez votre client sans les deux : un pipeline qui valide son propre travail, c’est juste une façon plus rapide de livrer n’importe quoi.</p>
   </div>
+
+  <figure class="band rv" data-speed="-0.055">
+    <img src="../team.webp" alt="A senior reviewing generated work on screen before it is approved" width="1800" height="663" loading="lazy" decoding="async">
+    <figcaption class="wrap band__cap">Someone reads what the machines produced, and decides whether it goes out. That is the step we don't automate.</figcaption>
+  </figure>
 </section>
 
 <!-- STAGES -->
@@ -901,6 +929,7 @@ footer{border-top:1px solid var(--line);padding-block:44px 56px;font-size:.875re
 <!-- COVERAGE -->
 <section class="cover" id="coverage" aria-label="Ce qu’un seul brief couvre">
   <div class="cover__stage">
+    <div class="cover__tex" aria-hidden="true"></div>
     <div class="cover__heads">
       <div class="cover__line" data-line="0"><p class="eyebrow">Un seul brief</p><h2 class="h2">Vous envoyez un seul brief.</h2></div>
       <div class="cover__line" data-line="1"><p class="eyebrow">Couverture complète</p><h2 class="h2">Seize métiers couverts.</h2></div>
@@ -1234,6 +1263,8 @@ footer{border-top:1px solid var(--line);padding-block:44px 56px;font-size:.875re
   addEventListener('pointerleave', () => { ptr.on = false; });
   new IntersectionObserver(([e]) => { e.isIntersecting ? start() : stop(); }, { threshold: 0 }).observe(hero);
 
+  const bands = [...document.querySelectorAll('.band')];
+
   /* Wayfinding: mark the section you are actually in */
   const navLinks = [...document.querySelectorAll('.nav__links a, .sheet > a')]
     .filter(a => (a.getAttribute('href') || '').startsWith('#'));
@@ -1247,6 +1278,14 @@ footer{border-top:1px solid var(--line);padding-block:44px 56px;font-size:.875re
   function frame() {
     ticking = false;
     nav.dataset.shown = scrollY > innerHeight * 0.55 ? '1' : '0';
+
+    if (!reduce) for (const el of bands) {
+      const r = el.getBoundingClientRect();
+      if (r.bottom > -200 && r.top < innerHeight + 200) {
+        const off = (r.top + r.height / 2 - innerHeight / 2) * parseFloat(el.dataset.speed || '-0.05');
+        el.querySelector('img').style.transform = `translate3d(0,${off.toFixed(1)}px,0)`;
+      }
+    }
 
     const line = innerHeight * 0.36;
     let current = null;
