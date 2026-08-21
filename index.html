@@ -326,8 +326,11 @@ body[data-locked="1"]{overflow:hidden}
 .js .rv.in{opacity:1;transform:none}
 
 /* HERO */
-.hero{position:relative;min-height:min(100svh,960px);display:grid;grid-template-rows:1fr auto;
+.hero{position:relative;height:320vh}
+.hero-stage{position:sticky;top:0;height:100svh;min-height:600px;
+  display:grid;grid-template-rows:1fr auto;
   padding-top:clamp(92px,13vh,146px);isolation:isolate;overflow:hidden}
+@media (prefers-reduced-motion:reduce){.hero{height:100svh}}
 /* Scroll-scrubbed hero footage: the layer is pinned, the frame follows the scroll */
 .hero-bg{position:absolute;inset:0;z-index:-2;overflow:hidden}
 .hero-scrub-layer{position:absolute;inset:0;overflow:hidden;background:#05070A}
@@ -337,9 +340,14 @@ body[data-locked="1"]{overflow:hidden}
   background:#05070A url("hero-poster.webp") 50% 45%/cover no-repeat}
 /* the scrim is what keeps the headline readable over moving footage */
 .hero-scrim{position:absolute;inset:0;pointer-events:none;background:
-  linear-gradient(180deg,rgba(8,9,11,.78) 0%,rgba(8,9,11,.46) 38%,rgba(8,9,11,.66) 72%,var(--bg) 100%),
-  radial-gradient(ellipse 76% 62% at 50% 46%,rgba(8,9,11,.10),rgba(8,9,11,.72) 82%)}
+  linear-gradient(180deg,rgba(8,9,11,.62) 0%,rgba(8,9,11,.12) 26%,rgba(8,9,11,.14) 58%,rgba(8,9,11,.80) 92%,var(--bg) 100%),
+  radial-gradient(ellipse 84% 74% at 50% 46%,transparent 34%,rgba(8,9,11,.42) 90%)}
 @media (prefers-reduced-motion:reduce){.hero-scrub-video{transform:scale(1.04)}}
+.hero__inner .display{text-shadow:0 2px 40px rgba(0,0,0,.92),0 2px 8px rgba(0,0,0,.75)}
+.hero__inner .lead,.hero__trust{text-shadow:0 2px 22px rgba(0,0,0,.94),0 1px 4px rgba(0,0,0,.8)}
+.hero__inner .eyebrow{text-shadow:0 2px 18px rgba(0,0,0,.92)}
+.hero .btn--ghost{background:rgba(8,9,11,.34);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.scroll-cue{text-shadow:0 2px 14px rgba(0,0,0,.9)}
 
 #fx{position:absolute;inset:0;z-index:-1;width:100%;height:100%;
   mask-image:radial-gradient(ellipse 78% 68% at 50% 42%,#000 12%,rgba(0,0,0,.55) 58%,transparent 88%);
@@ -647,6 +655,7 @@ footer{border-top:1px solid var(--line);padding-block:44px 56px;font-size:.875re
 
 <!-- HERO -->
 <header class="hero" id="top">
+ <div class="hero-stage">
   <div class="hero-bg" aria-hidden="true">
     <div class="hero-scrub-layer">
       <video class="hero-scrub-video" id="heroVid" muted playsinline preload="auto"
@@ -671,6 +680,7 @@ footer{border-top:1px solid var(--line);padding-block:44px 56px;font-size:.875re
     <p class="hero__trust">Most of what we build ships under someone else's name, which is why you won't find it in a portfolio.</p>
   </div>
   <div class="scroll-cue" aria-hidden="true">Scroll <span></span></div>
+ </div>
 </header>
 
 <main>
@@ -1258,46 +1268,68 @@ footer{border-top:1px solid var(--line);padding-block:44px 56px;font-size:.875re
   /* ---------- Hero: scroll-scrubbed footage ---------- */
   const vid = document.getElementById('heroVid');
   const heroEl = document.getElementById('top');
+  const stageEl = document.querySelector('.hero-stage');
+  const heroInner = document.querySelector('.hero__inner');
   let vidOn = false;
   if (vid) {
-    let dur = 0, want = 0, have = 0, vraf = 0, live = true, seeking = false;
+    let dur = 0, sp = 0, seeking = false;
+    let mx = 0, my = 0, cmx = 0, cmy = 0;
 
-    const progress = () => {
-      // the clip plays out over roughly one and a third screens of scrolling
-      const span = Math.max(heroEl.offsetHeight * 0.95, 1);
-      return Math.min(Math.max(scrollY / span, 0), 1);
+    const meta = () => { dur = vid.duration || 0; };
+    vid.addEventListener('loadedmetadata', meta);
+    if (vid.readyState >= 1) meta();
+    vid.addEventListener('seeked', () => { seeking = false; });
+
+    // iOS only paints a seeked frame after the element has played once, so prime it
+    // with a play/pause — otherwise Safari sits on the poster and scrolling does nothing.
+    vid.muted = true; vid.setAttribute('muted', ''); vid.setAttribute('playsinline', '');
+    let primed = false, allowPlay = false;
+    // The scroll drives currentTime; continuous playback is never wanted, so stop any of it.
+    vid.addEventListener('play', () => { if (!allowPlay) { try { vid.pause(); } catch (e) {} } });
+    const prime = () => {
+      if (primed) return; primed = true; allowPlay = true;
+      const done = () => { try { vid.pause(); } catch (e) {} allowPlay = false; };
+      const pr = vid.play();
+      if (pr && pr.then) pr.then(done).catch(done); else done();
     };
+    prime();
+    addEventListener('touchstart', prime, { once: true, passive: true });
+    addEventListener('touchmove', prime, { once: true, passive: true });
 
-    const tick = () => {
-      vraf = 0;
-      if (!dur) return;
-      want = progress() * dur;
-      // ease toward the target instead of jumping: a raw currentTime write stutters
-      have += (want - have) * (reduce ? 1 : 0.24);
-      if (!seeking && Math.abs(vid.currentTime - have) > 0.02) {
-        seeking = true;
-        try { vid.currentTime = have; } catch (e) {}
+    const onHeroScroll = () => {
+      const scrollable = heroEl.offsetHeight - innerHeight || 1;
+      sp = Math.min(Math.max(-heroEl.getBoundingClientRect().top / scrollable, 0), 1);
+    };
+    const onHeroMove = (e) => {
+      const r = stageEl.getBoundingClientRect();
+      mx = ((e.clientX - r.left) / r.width - 0.5) * 2;
+      my = ((e.clientY - r.top) / r.height - 0.5) * 2;
+    };
+    addEventListener('scroll', onHeroScroll, { passive: true });
+    addEventListener('pointermove', onHeroMove, { passive: true });
+    onHeroScroll();
+
+    const heroTick = () => {
+      cmx += (mx - cmx) * 0.08; cmy += (my - cmy) * 0.08;
+      if (dur && !seeking) {
+        const vp = Math.min(sp / 0.85, 1);            // the clip lands before the pin releases
+        const t = Math.min(vp * dur, dur - 0.05);     // never the exact end: iOS paints black past the last frame
+        if (Math.abs(t - vid.currentTime) > 0.02) { seeking = true; try { vid.currentTime = t; } catch (e) {} }
       }
-      const p = have / dur;
-      vid.style.transform = `scale(${(1.12 - p * 0.10).toFixed(4)})`;
-      if (live && Math.abs(want - have) > 0.004) schedule();
+      if (heroInner) {
+        const co = Math.max(0, Math.min(1, 1 - sp / 0.12));
+        heroInner.style.opacity = co;
+        heroInner.style.transform = 'perspective(900px) rotateY(' + (cmx * 7) + 'deg) rotateX(' + (-cmy * 5) + 'deg) translateY(' + (-sp * 70) + 'px)';
+        heroInner.style.pointerEvents = co < 0.05 ? 'none' : '';
+      }
+      vid.style.transform = 'scale(1.12) translate3d(' + (-cmx * 18) + 'px,' + (-cmy * 18) + 'px,0)';
+      requestAnimationFrame(heroTick);
     };
-    const schedule = () => { if (!vraf && live) vraf = requestAnimationFrame(tick); };
+    if (reduce) vid.addEventListener('loadedmetadata', () => { try { vid.currentTime = 0.1; } catch (e) {} }, { once: true });
+    else requestAnimationFrame(heroTick);
 
-    vid.addEventListener('seeked', () => { seeking = false; schedule(); });
-    vid.addEventListener('loadedmetadata', () => {
-      dur = vid.duration || 0; vid.pause();
-      vid.dataset.ready = '1'; vidOn = true;
-      have = 0; schedule();
-    }, { once: true });
-    vid.addEventListener('error', () => { vidOn = false; start(); }, { once: true });
-
-    addEventListener('scroll', schedule, { passive: true });
-    addEventListener('resize', schedule, { passive: true });
-    new IntersectionObserver(([e]) => {   // keep tracking a little past the hero so the clip can finish
-      live = e.isIntersecting;
-      if (live) schedule(); else { cancelAnimationFrame(vraf); vraf = 0; }
-    }, { threshold: 0, rootMargin: '600px 0px 0px 0px' }).observe(heroEl);
+    vid.addEventListener('error', () => { vidOn = false; }, { once: true });
+    vidOn = true;
   }
 
   /* Particle field — flow-field drift, pointer repulsion */
@@ -1309,7 +1341,7 @@ footer{border-top:1px solid var(--line);padding-block:44px 56px;font-size:.875re
 
   function size() {
     const dpr = Math.min(devicePixelRatio || 1, 2);
-    const r = hero.getBoundingClientRect();
+    const r = (stageEl || hero).getBoundingClientRect();
     W = r.width; H = r.height;
     cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -1348,16 +1380,16 @@ footer{border-top:1px solid var(--line);padding-block:44px 56px;font-size:.875re
 
   size();
   // one background at a time: the footage carries the hero, the field is the fallback
-  if (reduce) { draw(0); stop(); } else if (!vid) start();
+  if (reduce) { draw(0); stop(); } else start();
 
   addEventListener('resize', () => { size(); if (reduce) { draw(0); stop(); } }, { passive: true });
   addEventListener('pointermove', (e) => {
-    const r = hero.getBoundingClientRect();
+    const r = (stageEl || hero).getBoundingClientRect();
     ptr.x = e.clientX - r.left; ptr.y = e.clientY - r.top;
     ptr.on = ptr.y > -80 && ptr.y < H + 80;
   }, { passive: true });
   addEventListener('pointerleave', () => { ptr.on = false; });
-  new IntersectionObserver(([e]) => { if (vid && vidOn) { stop(); return; } e.isIntersecting ? start() : stop(); }, { threshold: 0 }).observe(hero);
+  new IntersectionObserver(([e]) => { e.isIntersecting ? start() : stop(); }, { threshold: 0 }).observe(hero);
 
   const bands = [...document.querySelectorAll('.band')];
 
