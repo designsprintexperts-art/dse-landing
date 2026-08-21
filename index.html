@@ -474,26 +474,32 @@ body[data-locked="1"]{overflow:hidden}
 .bar--us .bar__fill{background:linear-gradient(90deg,var(--accent-deep),var(--accent-bright))}
 .bar--us .bar__val{color:var(--accent-bright)}
 
-/* Full-bleed image band — bleeds into the section instead of sitting in a box */
-.band{position:relative;margin-top:clamp(34px,5vw,60px);height:clamp(300px,36vw,460px);
-  overflow:hidden;isolation:isolate}
-.band img{position:absolute;left:0;top:-9%;width:100%;height:118%;
-  object-fit:cover;object-position:50% 38%;will-change:transform}
-.band__cap{position:absolute;left:0;right:0;bottom:clamp(18px,3vw,32px);z-index:2;
-  font-size:.9rem;line-height:1.45;color:var(--fg-mid);max-width:min(var(--maxw),100%);
-  text-shadow:0 1px 14px rgba(0,0,0,.85)}
-.band__cap::before{content:"";display:block;width:26px;height:1.5px;border-radius:1px;
-  background:var(--warn);margin-bottom:12px}
-@media(max-width:640px){.band__cap{font-size:.82rem}}
-.band::after{content:"";position:absolute;inset:0;pointer-events:none;background:
-  linear-gradient(180deg,var(--bg-elev) 0%,rgba(15,17,20,0) 26%,rgba(15,17,20,.55) 74%,var(--bg-elev) 100%),
-  linear-gradient(90deg,var(--bg-elev) 0%,rgba(15,17,20,0) 16%,rgba(15,17,20,0) 84%,var(--bg-elev) 100%)}
+/* Review — the picture is shown whole; the sentence sits beside it */
+.review{display:grid;grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr);align-items:center;
+  gap:clamp(30px,5vw,76px)}
+.review__fig{position:relative;margin:0;border-radius:var(--r-xl);overflow:hidden;
+  border:1px solid var(--line);background:#0A0C0F;isolation:isolate}
+.review__fig img{display:block;width:100%;height:auto}   /* whole frame, never cropped */
+.review__fig::after{content:"";position:absolute;inset:0;pointer-events:none;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.05),inset 0 -80px 90px -60px rgba(8,9,11,.9)}
+.review__glow{position:absolute;inset:-14% -10% -18% -10%;z-index:-1;pointer-events:none;
+  background:radial-gradient(ellipse at 50% 45%,rgba(77,162,255,.20),transparent 66%);filter:blur(6px)}
+.review__body{display:grid;gap:clamp(16px,2.2vw,24px);justify-items:start;max-width:36rem}
+.review__rule{width:34px;height:2px;border-radius:2px;background:var(--warn);opacity:.9}
+.review__h{font-size:clamp(1.75rem,1rem + 2.4vw,2.7rem);line-height:1.08;letter-spacing:-.032em;
+  font-weight:700;margin:0;text-wrap:balance}
+.review__h em{font-style:normal;color:var(--accent-bright)}
+.review__p{margin:0}
+@media(max-width:900px){
+  .review{grid-template-columns:1fr;gap:clamp(24px,5vw,40px)}
+  .review__body{justify-items:start;max-width:none}
+}
 
 /* Silicon substrate under the coverage grid */
-.cover__tex{position:absolute;inset:0;z-index:0;pointer-events:none;opacity:.40;
-  background:url("chip.webp") 50% 46%/cover no-repeat;
-  mask-image:radial-gradient(ellipse 92% 58% at 50% 74%,#000 0%,rgba(0,0,0,.5) 46%,transparent 82%);
-  -webkit-mask-image:radial-gradient(ellipse 92% 58% at 50% 74%,#000 0%,rgba(0,0,0,.5) 46%,transparent 82%)}
+.cover__tex{position:absolute;inset:0;z-index:0;pointer-events:none;opacity:.62;
+  background:url("chip.webp") 50% 62%/cover no-repeat;
+  mask-image:radial-gradient(ellipse 100% 72% at 50% 78%,#000 0%,rgba(0,0,0,.62) 52%,transparent 92%);
+  -webkit-mask-image:radial-gradient(ellipse 100% 72% at 50% 78%,#000 0%,rgba(0,0,0,.62) 52%,transparent 92%)}
 .cover__heads,.cover__grid{position:relative;z-index:1}
 
 /* RISKS */
@@ -600,7 +606,7 @@ footer{border-top:1px solid var(--line);padding-block:44px 56px;font-size:.875re
 <nav class="nav" id="nav" aria-label="Main">
   <a class="nav__brand" href="#top" aria-label="DSE — home"><span class="mark"><svg class="mark__glyph" viewBox="0 0 48 48" aria-hidden="true"><circle class="node" cx="10" cy="10" r="4.6"/><circle class="node" cx="24" cy="10" r="4.6"/><circle class="node" cx="38" cy="10" r="4.6"/><circle class="node" cx="10" cy="24" r="4.6"/><circle class="core" cx="24" cy="24" r="9.4"/><circle class="node" cx="38" cy="24" r="4.6"/><circle class="node" cx="10" cy="38" r="4.6"/><circle class="node" cx="24" cy="38" r="4.6"/><circle class="node" cx="38" cy="38" r="4.6"/></svg><span class="mark__word"><i>D</i><i>S</i><i>E</i></span></span></a>
   <div class="nav__links">
-    <a href="#run">How it runs</a><a href="#stages">Design, build, deploy</a><a href="#coverage">Coverage</a>
+    <a href="#run">How it runs</a><a href="#review">Review</a><a href="#stages">Design, build, deploy</a><a href="#coverage">Coverage</a>
     <a href="#speed">Speed</a><a href="#risks">Risks</a><a href="#pricing">Pricing</a><a href="#faq">FAQ</a>
   </div>
   <a class="btn btn--primary btn--sm" href="#brief">Send a brief</a>
@@ -614,6 +620,7 @@ footer{border-top:1px solid var(--line);padding-block:44px 56px;font-size:.875re
 
 <div class="sheet" id="sheet" data-open="0">
   <a href="#run">How it runs</a>
+  <a href="#review">Review</a>
   <a href="#stages">Design, build, deploy</a>
   <a href="#coverage">Coverage</a>
   <a href="#speed">Speed</a>
@@ -687,10 +694,21 @@ footer{border-top:1px solid var(--line);padding-block:44px 56px;font-size:.875re
       The amber rows are people. A senior designer picks the direction and throws out whatever looks generated. A senior engineer reads the code before it merges. Nothing reaches your client without both, because a pipeline that approves its own work is just a faster way to ship something wrong.</p>
   </div>
 
-  <figure class="band rv" data-speed="-0.055">
-    <img src="team.webp" alt="A senior reviewing generated work on screen before it is approved" width="1800" height="663" loading="lazy" decoding="async">
-    <figcaption class="wrap band__cap">Someone reads what the machines produced, and decides whether it goes out. That is the step we don't automate.</figcaption>
-  </figure>
+</section>
+
+<!-- REVIEW -->
+<section class="section-pad" id="review" aria-label="Human review">
+  <div class="wrap review">
+    <figure class="review__fig rv">
+      <span class="review__glow" aria-hidden="true"></span>
+      <img src="duo.webp" alt="A designer at a laptop with a humanoid robot beside him, both looking at the same screen" width="1024" height="1024" loading="lazy" decoding="async">
+    </figure>
+    <div class="review__body">
+      <span class="review__rule rv" aria-hidden="true"></span>
+      <h2 class="review__h rv">The machines produce.<br><em>A person decides what ships.</em></h2>
+      <p class="lead review__p rv">A senior designer and a senior engineer read every deliverable before it leaves. That is the one step we don't automate, and it is why you can put your name on the result.</p>
+    </div>
+  </div>
 </section>
 
 <!-- STAGES -->
