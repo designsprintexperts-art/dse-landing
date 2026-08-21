@@ -326,7 +326,7 @@ body[data-locked="1"]{overflow:hidden}
 .js .rv.in{opacity:1;transform:none}
 
 /* HERO */
-.hero{position:relative;height:320vh}
+.hero{position:relative;height:320svh}
 .hero-stage{position:sticky;top:0;height:100svh;min-height:600px;
   display:grid;grid-template-rows:1fr auto;
   padding-top:clamp(92px,13vh,146px);isolation:isolate;overflow:hidden}
@@ -1292,14 +1292,18 @@ footer{border-top:1px solid var(--line);padding-block:44px 56px;font-size:.875re
     // The scroll drives currentTime; continuous playback is never wanted, so stop any of it.
     vid.addEventListener('play', () => { if (!allowPlay) { try { vid.pause(); } catch (e) {} } });
     const prime = () => {
-      if (primed) return; primed = true; allowPlay = true;
-      const done = () => { try { vid.pause(); } catch (e) {} allowPlay = false; };
+      if (primed) return;
+      allowPlay = true;
+      const ok = () => { primed = true; try { vid.pause(); } catch (e) {} allowPlay = false; };
+      const ko = () => { allowPlay = false; };   // stay unprimed so a real touch can retry
       const pr = vid.play();
-      if (pr && pr.then) pr.then(done).catch(done); else done();
+      if (pr && pr.then) pr.then(ok).catch(ko); else ok();
     };
     prime();
-    addEventListener('touchstart', prime, { once: true, passive: true });
-    addEventListener('touchmove', prime, { once: true, passive: true });
+    // these keep firing until one attempt actually succeeds
+    addEventListener('touchstart', prime, { passive: true });
+    addEventListener('touchmove', prime, { passive: true });
+    addEventListener('pointerdown', prime, { passive: true });
 
     const onHeroScroll = () => {
       const scrollable = heroEl.offsetHeight - innerHeight || 1;
