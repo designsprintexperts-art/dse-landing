@@ -1364,8 +1364,10 @@ footer{border-top:1px solid var(--line);padding-block:44px 56px;font-size:.875re
                   Math.min(Math.max(innerHeight * 0.10, 76), 104);
       const top = el.getBoundingClientRect().top + scrollY;
       const into = (LANDING[id] || 0) * Math.max(el.offsetHeight - innerHeight, 0);
+      // a hidden or throttled tab never runs a smooth scroll — jump instead of doing nothing
+      const smooth = !reduce && document.visibilityState === 'visible';
       scrollTo({ top: Math.max(0, top + into - (id === 'top' ? 0 : bar)),
-                 behavior: reduce ? 'auto' : 'smooth' });
+                 behavior: smooth ? 'smooth' : 'auto' });
       history.replaceState(null, '', '#' + id);
     });
   });
