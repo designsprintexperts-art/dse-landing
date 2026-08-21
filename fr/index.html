@@ -6,8 +6,9 @@
 <title>DSE — Sous-traitez le design, le code et le déploiement à une équipe d’agents IA</title>
 <meta name="description" content="Sous-traitez le design, le code et le déploiement à une équipe d’agents IA. En marque blanche pour les agences et les cabinets : périmètre ferme, prix ferme, date ferme, et votre client ne voit jamais que vous.">
 <meta name="color-scheme" content="dark">
+<script>document.documentElement.classList.add('js')</script>
 <meta name="theme-color" content="#08090B">
-<link rel="canonical" href="https://designsprintexperts-art.github.io/dse-landing/fr/">
+<link rel="canonical" href="https://designsprintexperts.com/fr/">
 <meta name="robots" content="noindex, follow">
 <meta name="author" content="Design Sprint Experts">
 
@@ -16,10 +17,10 @@
 <meta property="og:site_name" content="DSE — Design Sprint Experts">
 <meta property="og:locale" content="fr_FR">
 <meta property="og:locale:alternate" content="en_GB">
-<meta property="og:url" content="https://designsprintexperts-art.github.io/dse-landing/fr/">
+<meta property="og:url" content="https://designsprintexperts.com/fr/">
 <meta property="og:title" content="Sous-traitez le design, le code et le déploiement à une équipe d’agents IA">
 <meta property="og:description" content="Sous-traitez le design, le code et le déploiement à une équipe d’agents IA. En marque blanche pour les agences et les cabinets : périmètre ferme, prix ferme, date ferme, et votre client ne voit jamais que vous.">
-<meta property="og:image" content="https://designsprintexperts-art.github.io/dse-landing/og.jpg">
+<meta property="og:image" content="https://designsprintexperts.com/og.jpg">
 <meta property="og:image:type" content="image/jpeg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -29,7 +30,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Sous-traitez le design, le code et le déploiement à une équipe d’agents IA">
 <meta name="twitter:description" content="Sous-traitez le design, le code et le déploiement à une équipe d’agents IA. En marque blanche pour les agences et les cabinets : périmètre ferme, prix ferme, date ferme, et votre client ne voit jamais que vous.">
-<meta name="twitter:image" content="https://designsprintexperts-art.github.io/dse-landing/og.jpg">
+<meta name="twitter:image" content="https://designsprintexperts.com/og.jpg">
 <meta name="twitter:image:alt" content="DSE — Sous-traitez le design, le code et le déploiement à une équipe d’agents IA.">
 
 <!-- Icons -->
@@ -42,12 +43,12 @@
   "@graph": [
     {
       "@type": "ProfessionalService",
-      "@id": "https://designsprintexperts-art.github.io/dse-landing/fr/#org",
+      "@id": "https://designsprintexperts.com/fr/#org",
       "name": "Design Sprint Experts",
       "alternateName": "DSE",
-      "url": "https://designsprintexperts-art.github.io/dse-landing/fr/",
-      "logo": "https://designsprintexperts-art.github.io/dse-landing/apple-touch-icon.png",
-      "image": "https://designsprintexperts-art.github.io/dse-landing/og.jpg",
+      "url": "https://designsprintexperts.com/fr/",
+      "logo": "https://designsprintexperts.com/apple-touch-icon.png",
+      "image": "https://designsprintexperts.com/og.jpg",
       "email": "agentic@designsprintexperts.com",
       "description": "Design, développement front-end et mise en ligne en marque blanche pour les agences et les cabinets de conseil.",
       "address": {
@@ -95,19 +96,19 @@
     },
     {
       "@type": "WebSite",
-      "@id": "https://designsprintexperts-art.github.io/dse-landing/fr/#site",
-      "url": "https://designsprintexperts-art.github.io/dse-landing/fr/",
+      "@id": "https://designsprintexperts.com/fr/#site",
+      "url": "https://designsprintexperts.com/fr/",
       "name": "DSE — Design Sprint Experts",
       "inLanguage": "fr",
       "publisher": {
-        "@id": "https://designsprintexperts-art.github.io/dse-landing/fr/#org"
+        "@id": "https://designsprintexperts.com/fr/#org"
       }
     },
     {
       "@type": "FAQPage",
-      "@id": "https://designsprintexperts-art.github.io/dse-landing/fr/#faq",
+      "@id": "https://designsprintexperts.com/fr/#faq",
       "isPartOf": {
-        "@id": "https://designsprintexperts-art.github.io/dse-landing/fr/#site"
+        "@id": "https://designsprintexperts.com/fr/#site"
       },
       "mainEntity": [
         {
@@ -309,7 +310,8 @@ body[data-locked="1"]{overflow:hidden}
 .btn--ghost:hover{border-color:rgba(255,255,255,.34);background:rgba(255,255,255,.05)}
 .btn--sm{min-height:40px;padding:0 18px;font-size:.9rem}
 
-/* Language switch — the current state carries the fill */
+/* Reveals are an enhancement: nothing is hidden unless JS is alive to bring it back */
+.js /* Language switch — the current state carries the fill */
 .lang{display:inline-flex;align-items:center;gap:2px;padding:3px;border-radius:999px;
   border:1px solid var(--line);background:rgba(255,255,255,.03);flex:0 0 auto}
 .lang a{display:inline-flex;align-items:center;justify-content:center;
@@ -322,11 +324,36 @@ body[data-locked="1"]{overflow:hidden}
 @media(max-width:420px){.lang a{min-width:34px;padding:0 8px}}
 
 .rv{opacity:0;transform:translate3d(0,22px,0);transition:opacity .7s var(--ease-out),transform .7s var(--ease-out)}
-.rv.in{opacity:1;transform:none}
+.js .rv.in{opacity:1;transform:none}
 
 /* HERO */
-.hero{position:relative;min-height:min(100svh,960px);display:grid;grid-template-rows:1fr auto;
+.hero{position:relative;height:320vh}
+.hero-stage{position:sticky;top:0;height:100svh;min-height:600px;
+  display:grid;grid-template-rows:1fr auto;
   padding-top:clamp(92px,13vh,146px);isolation:isolate;overflow:hidden}
+@media (prefers-reduced-motion:reduce){.hero{height:100svh}}
+/* Scroll-scrubbed hero footage: the layer is pinned, the frame follows the scroll */
+.hero-bg{position:absolute;inset:0;z-index:-2;overflow:hidden}
+.hero-scrub-layer{position:absolute;inset:0;overflow:hidden;background:#05070A}
+.hero-scrub-video{position:absolute;top:0;left:0;width:100%;height:100%;
+  object-fit:cover;object-position:50% 45%;
+  transform:scale(1.12);transform-origin:50% 45%;will-change:transform;
+  background:#05070A url("hero-poster.webp") 50% 45%/cover no-repeat}
+/* the scrim is what keeps the headline readable over moving footage */
+.hero-scrim{position:absolute;inset:0;pointer-events:none;background:
+  linear-gradient(180deg,rgba(8,9,11,.62) 0%,rgba(8,9,11,.12) 26%,rgba(8,9,11,.14) 58%,rgba(8,9,11,.80) 92%,var(--bg) 100%),
+  radial-gradient(ellipse 84% 74% at 50% 46%,transparent 34%,rgba(8,9,11,.42) 90%)}
+@media (prefers-reduced-motion:reduce){.hero-scrub-video{transform:scale(1.04)}}
+.hero__inner .display{text-shadow:0 2px 40px rgba(0,0,0,.92),0 2px 8px rgba(0,0,0,.75)}
+/* over moving footage a muted grey disappears — the hero copy runs brighter and heavier */
+.hero__inner .lead{color:#EDF1F5;font-weight:500;letter-spacing:-.005em;
+  text-shadow:0 2px 26px rgba(0,0,0,.98),0 1px 3px rgba(0,0,0,.92),0 0 70px rgba(0,0,0,.75)}
+.hero__trust{color:#C3CBD3;
+  text-shadow:0 2px 20px rgba(0,0,0,.96),0 1px 3px rgba(0,0,0,.9)}
+.hero__inner .eyebrow{text-shadow:0 2px 18px rgba(0,0,0,.92)}
+.hero .btn--ghost{background:rgba(8,9,11,.34);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.scroll-cue{text-shadow:0 2px 14px rgba(0,0,0,.9)}
+
 #fx{position:absolute;inset:0;z-index:-1;width:100%;height:100%;
   mask-image:radial-gradient(ellipse 78% 68% at 50% 42%,#000 12%,rgba(0,0,0,.55) 58%,transparent 88%);
   -webkit-mask-image:radial-gradient(ellipse 78% 68% at 50% 42%,#000 12%,rgba(0,0,0,.55) 58%,transparent 88%)}
@@ -337,7 +364,14 @@ body[data-locked="1"]{overflow:hidden}
   background-size:76px 76px;
   mask-image:radial-gradient(ellipse 76% 58% at 50% 34%,#000 0%,transparent 76%);
   -webkit-mask-image:radial-gradient(ellipse 76% 58% at 50% 34%,#000 0%,transparent 76%)}
-.hero__inner{display:grid;place-content:center;justify-items:center;text-align:center;gap:clamp(18px,2.4vw,26px)}
+.hero__inner{position:relative;z-index:1;display:grid;place-content:center;justify-items:center;
+  text-align:center;gap:clamp(18px,2.4vw,26px)}
+/* a soft pool behind the copy only: contrast where the words are, footage everywhere else */
+.hero__inner::before{content:"";position:absolute;left:50%;top:50%;translate:-50% -50%;z-index:-1;
+  width:min(1240px,124%);height:min(820px,158%);pointer-events:none;
+  background:radial-gradient(ellipse at center,
+    rgba(5,7,10,.80) 0%,rgba(5,7,10,.68) 32%,rgba(5,7,10,.34) 58%,rgba(5,7,10,.08) 76%,transparent 88%);
+  filter:blur(8px)}
 .hero__inner .display{max-width:16ch}
 .hero__inner .lead{max-width:62ch}
 .hero__cta{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
@@ -475,26 +509,27 @@ body[data-locked="1"]{overflow:hidden}
 .bar--us .bar__fill{background:linear-gradient(90deg,var(--accent-deep),var(--accent-bright))}
 .bar--us .bar__val{color:var(--accent-bright)}
 
-/* Full-bleed image band — bleeds into the section instead of sitting in a box */
-.band{position:relative;margin-top:clamp(34px,5vw,60px);height:clamp(300px,36vw,460px);
-  overflow:hidden;isolation:isolate}
-.band img{position:absolute;left:0;top:-9%;width:100%;height:118%;
-  object-fit:cover;object-position:50% 38%;will-change:transform}
-.band__cap{position:absolute;left:0;right:0;bottom:clamp(18px,3vw,32px);z-index:2;
-  font-size:.9rem;line-height:1.45;color:var(--fg-mid);max-width:min(var(--maxw),100%);
-  text-shadow:0 1px 14px rgba(0,0,0,.85)}
-.band__cap::before{content:"";display:block;width:26px;height:1.5px;border-radius:1px;
-  background:var(--warn);margin-bottom:12px}
-@media(max-width:640px){.band__cap{font-size:.82rem}}
-.band::after{content:"";position:absolute;inset:0;pointer-events:none;background:
-  linear-gradient(180deg,var(--bg-elev) 0%,rgba(15,17,20,0) 26%,rgba(15,17,20,.55) 74%,var(--bg-elev) 100%),
-  linear-gradient(90deg,var(--bg-elev) 0%,rgba(15,17,20,0) 16%,rgba(15,17,20,0) 84%,var(--bg-elev) 100%)}
+/* Review — the picture is shown whole; the sentence sits beside it */
+.review{display:grid;grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr);align-items:center;
+  gap:clamp(30px,5vw,76px)}
+.review__fig{position:relative;margin:0;border-radius:var(--r-xl);overflow:hidden;
+  border:1px solid var(--line);background:#0A0C0F;isolation:isolate}
+.review__fig img{display:block;width:100%;height:auto}   /* whole frame, never cropped */
+.review__fig::after{content:"";position:absolute;inset:0;pointer-events:none;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.05),inset 0 -80px 90px -60px rgba(8,9,11,.9)}
+.review__glow{position:absolute;inset:-14% -10% -18% -10%;z-index:-1;pointer-events:none;
+  background:radial-gradient(ellipse at 50% 45%,rgba(77,162,255,.20),transparent 66%);filter:blur(6px)}
+.review__body{display:grid;gap:clamp(16px,2.2vw,24px);justify-items:start;max-width:36rem}
+.review__rule{width:34px;height:2px;border-radius:2px;background:var(--warn);opacity:.9}
+.review__h{font-size:clamp(1.75rem,1rem + 2.4vw,2.7rem);line-height:1.08;letter-spacing:-.032em;
+  font-weight:700;margin:0;text-wrap:balance}
+.review__h em{font-style:normal;color:var(--accent-bright)}
+.review__p{margin:0}
+@media(max-width:900px){
+  .review{grid-template-columns:1fr;gap:clamp(24px,5vw,40px)}
+  .review__body{justify-items:start;max-width:none}
+}
 
-/* Silicon substrate under the coverage grid */
-.cover__tex{position:absolute;inset:0;z-index:0;pointer-events:none;opacity:.40;
-  background:url("../chip.webp") 50% 46%/cover no-repeat;
-  mask-image:radial-gradient(ellipse 92% 58% at 50% 74%,#000 0%,rgba(0,0,0,.5) 46%,transparent 82%);
-  -webkit-mask-image:radial-gradient(ellipse 92% 58% at 50% 74%,#000 0%,rgba(0,0,0,.5) 46%,transparent 82%)}
 .cover__heads,.cover__grid{position:relative;z-index:1}
 
 /* RISKS */
@@ -559,8 +594,8 @@ footer{border-top:1px solid var(--line);padding-block:44px 56px;font-size:.875re
   html{scroll-behavior:auto}
   .scroll-cue span::after{animation:none;opacity:.45}
   .faq details::details-content{transition:none}
-  .rv,.chip,.cover__line,.runrow{transition:opacity .25s linear !important;transform:none !important}
-  .rv.in,.chip.on,.cover__line.on,.runrow.on{transform:none !important}
+  .js .rv,.chip,.cover__line,.runrow{transition:opacity .25s linear !important;transform:none !important}
+  .js .rv.in,.chip.on,.cover__line.on,.runrow.on{transform:none !important}
   .ui .draw{transition:none;stroke-dashoffset:0}
   .ui .pop{transition:opacity .25s linear;transform:none}
   .bar__fill,.runrow__fill{transition:width .3s linear}
@@ -601,7 +636,7 @@ footer{border-top:1px solid var(--line);padding-block:44px 56px;font-size:.875re
 <nav class="nav" id="nav" aria-label="Navigation principale">
   <a class="nav__brand" href="#top" aria-label="DSE — accueil"><span class="mark"><svg class="mark__glyph" viewBox="0 0 48 48" aria-hidden="true"><circle class="node" cx="10" cy="10" r="4.6"/><circle class="node" cx="24" cy="10" r="4.6"/><circle class="node" cx="38" cy="10" r="4.6"/><circle class="node" cx="10" cy="24" r="4.6"/><circle class="core" cx="24" cy="24" r="9.4"/><circle class="node" cx="38" cy="24" r="4.6"/><circle class="node" cx="10" cy="38" r="4.6"/><circle class="node" cx="24" cy="38" r="4.6"/><circle class="node" cx="38" cy="38" r="4.6"/></svg><span class="mark__word"><i>D</i><i>S</i><i>E</i></span></span></a>
   <div class="nav__links">
-    <a href="#run">Comment ça tourne</a><a href="#stages">Design, code, déploiement</a><a href="#coverage">Couverture</a>
+    <a href="#run">Comment ça tourne</a><a href="#review">Relecture</a><a href="#stages">Design, code, déploiement</a><a href="#coverage">Couverture</a>
     <a href="#speed">Vitesse</a><a href="#risks">Risques</a><a href="#pricing">Tarifs</a><a href="#faq">FAQ</a>
   </div>
   <a class="btn btn--primary btn--sm" href="#brief">Envoyer un brief</a>
@@ -615,6 +650,7 @@ footer{border-top:1px solid var(--line);padding-block:44px 56px;font-size:.875re
 
 <div class="sheet" id="sheet" data-open="0">
   <a href="#run">Comment ça tourne</a>
+  <a href="#review">Relecture</a>
   <a href="#stages">Design, code, déploiement</a>
   <a href="#coverage">Couverture</a>
   <a href="#speed">Vitesse</a>
@@ -626,20 +662,32 @@ footer{border-top:1px solid var(--line);padding-block:44px 56px;font-size:.875re
 
 <!-- HERO -->
 <header class="hero" id="top">
+ <div class="hero-stage">
+  <div class="hero-bg" aria-hidden="true">
+    <div class="hero-scrub-layer">
+      <video class="hero-scrub-video" id="heroVid" muted playsinline preload="auto"
+             poster="hero-poster.webp" disablepictureinpicture>
+        <source src="hero-scrub-sm.mp4" type="video/mp4" media="(max-width:900px)">
+        <source src="hero-scrub.mp4" type="video/mp4">
+      </video>
+    </div>
+    <div class="hero-scrim"></div>
+  </div>
   <div class="grid-tex" aria-hidden="true"></div>
   <div class="hero__aura" aria-hidden="true"></div>
   <canvas id="fx" aria-hidden="true"></canvas>
   <div class="hero__inner wrap">
-    <p class="eyebrow rv">Pour les agences et les cabinets de conseil</p>
-    <h1 class="display rv">Sous-traitez le design, le code et le déploiement à une équipe d’agents IA.</h1>
-    <p class="lead rv">Les agences nous envoient ce qu’elles ne peuvent pas staffer. Les agents produisent, deux seniors décident de ce qui sort. Vous récupérez le Figma, le dépôt et un site en ligne, au nom de votre client. Pas du nôtre.</p>
-    <div class="hero__cta rv">
+    <p class="eyebrow">Pour les agences et les cabinets de conseil</p>
+    <h1 class="display">Sous-traitez le design, le code et le déploiement à une équipe d’agents IA.</h1>
+    <p class="lead">Les agences nous envoient ce qu’elles ne peuvent pas staffer. Les agents produisent, deux seniors décident de ce qui sort. Vous récupérez le Figma, le dépôt et un site en ligne, au nom de votre client. Pas du nôtre.</p>
+    <div class="hero__cta">
       <a class="btn btn--primary" href="#brief">Envoyer un brief</a>
       <a class="btn btn--ghost" href="#run">Voir comment ça tourne</a>
     </div>
-    <p class="hero__trust rv">Presque tout ce qu’on fait sort sous le nom de quelqu’un d’autre. C’est pour ça qu’il n’y a pas de portfolio.</p>
+    <p class="hero__trust">Presque tout ce qu’on fait sort sous le nom de quelqu’un d’autre. C’est pour ça qu’il n’y a pas de portfolio.</p>
   </div>
   <div class="scroll-cue" aria-hidden="true">Défiler <span></span></div>
+ </div>
 </header>
 
 <main>
@@ -688,10 +736,21 @@ footer{border-top:1px solid var(--line);padding-block:44px 56px;font-size:.875re
       Les lignes orange, ce sont des humains. Un designer senior tranche la direction et jette ce qui sent le généré. Un ingénieur senior relit le code avant de le merger. Rien ne part chez votre client sans les deux : un pipeline qui valide son propre travail, c’est juste une façon plus rapide de livrer n’importe quoi.</p>
   </div>
 
-  <figure class="band rv" data-speed="-0.055">
-    <img src="../team.webp" alt="A senior reviewing generated work on screen before it is approved" width="1800" height="663" loading="lazy" decoding="async">
-    <figcaption class="wrap band__cap">Someone reads what the machines produced, and decides whether it goes out. That is the step we don't automate.</figcaption>
-  </figure>
+</section>
+
+<!-- REVIEW -->
+<section class="section-pad" id="review" aria-label="Human review">
+  <div class="wrap review">
+    <figure class="review__fig rv">
+      <span class="review__glow" aria-hidden="true"></span>
+      <img src="duo.webp" alt="A designer at a laptop with a humanoid robot beside him, both looking at the same screen" width="1024" height="1024" loading="lazy" decoding="async">
+    </figure>
+    <div class="review__body">
+      <span class="review__rule rv" aria-hidden="true"></span>
+      <h2 class="review__h rv">The machines produce.<br><em>A person decides what ships.</em></h2>
+      <p class="lead review__p rv">A senior designer and a senior engineer read every deliverable before it leaves. That is the one step we don't automate, and it is why you can put your name on the result.</p>
+    </div>
+  </div>
 </section>
 
 <!-- STAGES -->
@@ -929,7 +988,6 @@ footer{border-top:1px solid var(--line);padding-block:44px 56px;font-size:.875re
 <!-- COVERAGE -->
 <section class="cover" id="coverage" aria-label="Ce qu’un seul brief couvre">
   <div class="cover__stage">
-    <div class="cover__tex" aria-hidden="true"></div>
     <div class="cover__heads">
       <div class="cover__line" data-line="0"><p class="eyebrow">Un seul brief</p><h2 class="h2">Vous envoyez un seul brief.</h2></div>
       <div class="cover__line" data-line="1"><p class="eyebrow">Couverture complète</p><h2 class="h2">Seize métiers couverts.</h2></div>
@@ -1115,6 +1173,14 @@ footer{border-top:1px solid var(--line);padding-block:44px 56px;font-size:.875re
     });
   }, { rootMargin: '0px 0px -12% 0px', threshold: .05 });
   document.querySelectorAll('.rv').forEach(el => io.observe(el));
+  // If the observer never fires — background tab, restored session, throttled paint —
+  // show whatever is on screen anyway. Content must not depend on an animation running.
+  setTimeout(() => {
+    for (const el of document.querySelectorAll('.rv:not(.in)')) {
+      const r = el.getBoundingClientRect();
+      if (r.top < innerHeight * 1.1 && r.bottom > 0) { el.style.transitionDelay = '0ms'; el.classList.add('in'); }
+    }
+  }, 2500);
 
   /* Stage panels get .in so their UI illustrations draw themselves */
   const stageIO = new IntersectionObserver((es) => {
@@ -1205,6 +1271,71 @@ footer{border-top:1px solid var(--line);padding-block:44px 56px;font-size:.875re
   }, { threshold: .4 });
   document.querySelectorAll('.bar').forEach(b => barIO.observe(b));
 
+  /* ---------- Hero: scroll-scrubbed footage ---------- */
+  const vid = document.getElementById('heroVid');
+  const heroEl = document.getElementById('top');
+  const stageEl = document.querySelector('.hero-stage');
+  const heroInner = document.querySelector('.hero__inner');
+  let vidOn = false;
+  if (vid) {
+    let dur = 0, sp = 0, seeking = false;
+    let mx = 0, my = 0, cmx = 0, cmy = 0;
+
+    const meta = () => { dur = vid.duration || 0; };
+    vid.addEventListener('loadedmetadata', meta);
+    if (vid.readyState >= 1) meta();
+    vid.addEventListener('seeked', () => { seeking = false; });
+
+    // iOS only paints a seeked frame after the element has played once, so prime it
+    // with a play/pause — otherwise Safari sits on the poster and scrolling does nothing.
+    vid.muted = true; vid.setAttribute('muted', ''); vid.setAttribute('playsinline', '');
+    let primed = false, allowPlay = false;
+    // The scroll drives currentTime; continuous playback is never wanted, so stop any of it.
+    vid.addEventListener('play', () => { if (!allowPlay) { try { vid.pause(); } catch (e) {} } });
+    const prime = () => {
+      if (primed) return; primed = true; allowPlay = true;
+      const done = () => { try { vid.pause(); } catch (e) {} allowPlay = false; };
+      const pr = vid.play();
+      if (pr && pr.then) pr.then(done).catch(done); else done();
+    };
+    prime();
+    addEventListener('touchstart', prime, { once: true, passive: true });
+    addEventListener('touchmove', prime, { once: true, passive: true });
+
+    const onHeroScroll = () => {
+      const scrollable = heroEl.offsetHeight - innerHeight || 1;
+      sp = Math.min(Math.max(-heroEl.getBoundingClientRect().top / scrollable, 0), 1);
+    };
+    const onHeroMove = (e) => {
+      const r = stageEl.getBoundingClientRect();
+      mx = ((e.clientX - r.left) / r.width - 0.5) * 2;
+      my = ((e.clientY - r.top) / r.height - 0.5) * 2;
+    };
+    addEventListener('scroll', onHeroScroll, { passive: true });
+    addEventListener('pointermove', onHeroMove, { passive: true });
+    onHeroScroll();
+
+    const heroTick = () => {
+      cmx += (mx - cmx) * 0.08; cmy += (my - cmy) * 0.08;
+      if (dur && !seeking) {
+        const vp = Math.min(sp / 0.85, 1);            // the clip lands before the pin releases
+        const t = Math.min(vp * dur, dur - 0.05);     // never the exact end: iOS paints black past the last frame
+        if (Math.abs(t - vid.currentTime) > 0.02) { seeking = true; try { vid.currentTime = t; } catch (e) {} }
+      }
+      if (heroInner) {
+        // the headline stays readable for the whole pin — only the depth cue moves
+        heroInner.style.transform = 'perspective(900px) rotateY(' + (cmx * 7) + 'deg) rotateX(' + (-cmy * 5) + 'deg) translateY(' + (-sp * 26) + 'px)';
+      }
+      vid.style.transform = 'scale(1.12) translate3d(' + (-cmx * 18) + 'px,' + (-cmy * 18) + 'px,0)';
+      requestAnimationFrame(heroTick);
+    };
+    if (reduce) vid.addEventListener('loadedmetadata', () => { try { vid.currentTime = 0.1; } catch (e) {} }, { once: true });
+    else requestAnimationFrame(heroTick);
+
+    vid.addEventListener('error', () => { vidOn = false; }, { once: true });
+    vidOn = true;
+  }
+
   /* Particle field — flow-field drift, pointer repulsion */
   const cv = document.getElementById('fx'), ctx = cv.getContext('2d');
   const hero = document.getElementById('top');
@@ -1214,7 +1345,7 @@ footer{border-top:1px solid var(--line);padding-block:44px 56px;font-size:.875re
 
   function size() {
     const dpr = Math.min(devicePixelRatio || 1, 2);
-    const r = hero.getBoundingClientRect();
+    const r = (stageEl || hero).getBoundingClientRect();
     W = r.width; H = r.height;
     cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -1252,11 +1383,12 @@ footer{border-top:1px solid var(--line);padding-block:44px 56px;font-size:.875re
   const stop = () => { cancelAnimationFrame(raf); raf = 0; };
 
   size();
+  // one background at a time: the footage carries the hero, the field is the fallback
   if (reduce) { draw(0); stop(); } else start();
 
   addEventListener('resize', () => { size(); if (reduce) { draw(0); stop(); } }, { passive: true });
   addEventListener('pointermove', (e) => {
-    const r = hero.getBoundingClientRect();
+    const r = (stageEl || hero).getBoundingClientRect();
     ptr.x = e.clientX - r.left; ptr.y = e.clientY - r.top;
     ptr.on = ptr.y > -80 && ptr.y < H + 80;
   }, { passive: true });
@@ -1337,8 +1469,10 @@ footer{border-top:1px solid var(--line);padding-block:44px 56px;font-size:.875re
                   Math.min(Math.max(innerHeight * 0.10, 76), 104);
       const top = el.getBoundingClientRect().top + scrollY;
       const into = (LANDING[id] || 0) * Math.max(el.offsetHeight - innerHeight, 0);
+      // a hidden or throttled tab never runs a smooth scroll — jump instead of doing nothing
+      const smooth = !reduce && document.visibilityState === 'visible';
       scrollTo({ top: Math.max(0, top + into - (id === 'top' ? 0 : bar)),
-                 behavior: reduce ? 'auto' : 'smooth' });
+                 behavior: smooth ? 'smooth' : 'auto' });
       history.replaceState(null, '', '#' + id);
     });
   });
