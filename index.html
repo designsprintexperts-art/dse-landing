@@ -344,7 +344,11 @@ body[data-locked="1"]{overflow:hidden}
   radial-gradient(ellipse 84% 74% at 50% 46%,transparent 34%,rgba(8,9,11,.42) 90%)}
 @media (prefers-reduced-motion:reduce){.hero-scrub-video{transform:scale(1.04)}}
 .hero__inner .display{text-shadow:0 2px 40px rgba(0,0,0,.92),0 2px 8px rgba(0,0,0,.75)}
-.hero__inner .lead,.hero__trust{text-shadow:0 2px 22px rgba(0,0,0,.94),0 1px 4px rgba(0,0,0,.8)}
+/* over moving footage a muted grey disappears — the hero copy runs brighter and heavier */
+.hero__inner .lead{color:#EDF1F5;font-weight:500;letter-spacing:-.005em;
+  text-shadow:0 2px 26px rgba(0,0,0,.98),0 1px 3px rgba(0,0,0,.92),0 0 70px rgba(0,0,0,.75)}
+.hero__trust{color:#C3CBD3;
+  text-shadow:0 2px 20px rgba(0,0,0,.96),0 1px 3px rgba(0,0,0,.9)}
 .hero__inner .eyebrow{text-shadow:0 2px 18px rgba(0,0,0,.92)}
 .hero .btn--ghost{background:rgba(8,9,11,.34);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
 .scroll-cue{text-shadow:0 2px 14px rgba(0,0,0,.9)}
@@ -359,7 +363,14 @@ body[data-locked="1"]{overflow:hidden}
   background-size:76px 76px;
   mask-image:radial-gradient(ellipse 76% 58% at 50% 34%,#000 0%,transparent 76%);
   -webkit-mask-image:radial-gradient(ellipse 76% 58% at 50% 34%,#000 0%,transparent 76%)}
-.hero__inner{display:grid;place-content:center;justify-items:center;text-align:center;gap:clamp(18px,2.4vw,26px)}
+.hero__inner{position:relative;z-index:1;display:grid;place-content:center;justify-items:center;
+  text-align:center;gap:clamp(18px,2.4vw,26px)}
+/* a soft pool behind the copy only: contrast where the words are, footage everywhere else */
+.hero__inner::before{content:"";position:absolute;left:50%;top:50%;translate:-50% -50%;z-index:-1;
+  width:min(1240px,124%);height:min(820px,158%);pointer-events:none;
+  background:radial-gradient(ellipse at center,
+    rgba(5,7,10,.80) 0%,rgba(5,7,10,.68) 32%,rgba(5,7,10,.34) 58%,rgba(5,7,10,.08) 76%,transparent 88%);
+  filter:blur(8px)}
 .hero__inner .display{max-width:16ch}
 .hero__inner .lead{max-width:62ch}
 .hero__cta{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
@@ -518,11 +529,6 @@ body[data-locked="1"]{overflow:hidden}
   .review__body{justify-items:start;max-width:none}
 }
 
-/* Silicon substrate under the coverage grid */
-.cover__tex{position:absolute;inset:0;z-index:0;pointer-events:none;opacity:.55;
-  background:url("chip.webp") 50% 58%/cover no-repeat;
-  mask-image:radial-gradient(ellipse 100% 72% at 50% 78%,#000 0%,rgba(0,0,0,.62) 52%,transparent 92%);
-  -webkit-mask-image:radial-gradient(ellipse 100% 72% at 50% 78%,#000 0%,rgba(0,0,0,.62) 52%,transparent 92%)}
 .cover__heads,.cover__grid{position:relative;z-index:1}
 
 /* RISKS */
@@ -981,7 +987,6 @@ footer{border-top:1px solid var(--line);padding-block:44px 56px;font-size:.875re
 <!-- COVERAGE -->
 <section class="cover" id="coverage" aria-label="What one brief covers">
   <div class="cover__stage">
-    <div class="cover__tex" aria-hidden="true"></div>
     <div class="cover__heads">
       <div class="cover__line" data-line="0"><p class="eyebrow">One brief</p><h2 class="h2">You send one brief.</h2></div>
       <div class="cover__line" data-line="1"><p class="eyebrow">Full coverage</p><h2 class="h2">Sixteen disciplines are covered.</h2></div>
@@ -1317,10 +1322,8 @@ footer{border-top:1px solid var(--line);padding-block:44px 56px;font-size:.875re
         if (Math.abs(t - vid.currentTime) > 0.02) { seeking = true; try { vid.currentTime = t; } catch (e) {} }
       }
       if (heroInner) {
-        const co = Math.max(0, Math.min(1, 1 - sp / 0.12));
-        heroInner.style.opacity = co;
-        heroInner.style.transform = 'perspective(900px) rotateY(' + (cmx * 7) + 'deg) rotateX(' + (-cmy * 5) + 'deg) translateY(' + (-sp * 70) + 'px)';
-        heroInner.style.pointerEvents = co < 0.05 ? 'none' : '';
+        // the headline stays readable for the whole pin — only the depth cue moves
+        heroInner.style.transform = 'perspective(900px) rotateY(' + (cmx * 7) + 'deg) rotateX(' + (-cmy * 5) + 'deg) translateY(' + (-sp * 26) + 'px)';
       }
       vid.style.transform = 'scale(1.12) translate3d(' + (-cmx * 18) + 'px,' + (-cmy * 18) + 'px,0)';
       requestAnimationFrame(heroTick);
