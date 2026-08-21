@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://designsprintexperts-art.github.io/dse-landing/sitemap.xml
+Sitemap: https://designsprintexperts.com/sitemap.xml
