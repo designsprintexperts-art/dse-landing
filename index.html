@@ -531,6 +531,18 @@ body[data-locked="1"]{overflow:hidden}
 
 .cover__heads,.cover__grid{position:relative;z-index:1}
 
+/* OWNED TOOLS */
+.own__claim{font-size:clamp(1.35rem,1rem + 1.7vw,2.15rem);line-height:1.22;letter-spacing:-.026em;
+  font-weight:640;margin:0;max-width:30ch;text-wrap:balance}
+.own__claim em{font-style:normal;color:var(--accent-bright)}
+.own__grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(14px,2vw,22px);
+  margin-top:clamp(30px,4vw,48px)}
+.own__item{border:1px solid var(--line);border-radius:var(--r-lg);background:var(--bg-elev);
+  padding:clamp(22px,2.8vw,32px);display:grid;gap:10px;align-content:start}
+.own__k{font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;font-weight:600;color:var(--accent)}
+.own__t{margin:0;font-size:1rem;line-height:1.45;color:var(--fg-mid)}
+@media(max-width:820px){.own__grid{grid-template-columns:1fr}}
+
 /* RISKS */
 .risk{display:grid;grid-template-columns:1.02fr 1.28fr;gap:clamp(18px,3vw,52px);
   padding:clamp(26px,3.4vw,40px) 0;border-top:1px solid var(--line);align-items:start}
@@ -635,7 +647,7 @@ footer{border-top:1px solid var(--line);padding-block:44px 56px;font-size:.875re
 <nav class="nav" id="nav" aria-label="Main">
   <a class="nav__brand" href="#top" aria-label="DSE — home"><span class="mark"><svg class="mark__glyph" viewBox="0 0 48 48" aria-hidden="true"><circle class="node" cx="10" cy="10" r="4.6"/><circle class="node" cx="24" cy="10" r="4.6"/><circle class="node" cx="38" cy="10" r="4.6"/><circle class="node" cx="10" cy="24" r="4.6"/><circle class="core" cx="24" cy="24" r="9.4"/><circle class="node" cx="38" cy="24" r="4.6"/><circle class="node" cx="10" cy="38" r="4.6"/><circle class="node" cx="24" cy="38" r="4.6"/><circle class="node" cx="38" cy="38" r="4.6"/></svg><span class="mark__word"><i>D</i><i>S</i><i>E</i></span></span></a>
   <div class="nav__links">
-    <a href="#run">How it runs</a><a href="#review">Review</a><a href="#stages">Design, build, deploy</a><a href="#coverage">Coverage</a>
+    <a href="#run">How it runs</a><a href="#review">Review</a><a href="#stages">Design &amp; build</a><a href="#tools">Own your tools</a>
     <a href="#speed">Speed</a><a href="#risks">Risks</a><a href="#pricing">Pricing</a><a href="#faq">FAQ</a>
   </div>
   <a class="btn btn--primary btn--sm" href="#brief">Send a brief</a>
@@ -650,7 +662,8 @@ footer{border-top:1px solid var(--line);padding-block:44px 56px;font-size:.875re
 <div class="sheet" id="sheet" data-open="0">
   <a href="#run">How it runs</a>
   <a href="#review">Review</a>
-  <a href="#stages">Design, build, deploy</a>
+  <a href="#stages">Design &amp; build</a>
+  <a href="#tools">Own your tools</a>
   <a href="#coverage">Coverage</a>
   <a href="#speed">Speed</a>
   <a href="#risks">Risks</a>
@@ -984,6 +997,37 @@ footer{border-top:1px solid var(--line);padding-block:44px 56px;font-size:.875re
   </div>
 </section>
 
+<!-- OWNED TOOLS -->
+<section class="section-pad" id="tools" style="background:var(--bg-elev);border-block:1px solid var(--line)">
+  <div class="wrap">
+    <p class="eyebrow rv">Not only websites</p>
+    <h2 class="h2 rv" style="margin:14px 0 18px;max-width:22ch">The tool your teams use every day. Yours, not rented.</h2>
+    <p class="lead rv" style="max-width:56ch">Most companies run on software that half fits. The gap gets filled with spreadsheets, and with people's time.</p>
+
+    <div style="margin-top:clamp(30px,4.6vw,52px)">
+      <div class="tension__item rv"><span class="tension__num">01</span><p class="tension__txt">Your team keeps a spreadsheet next to the tool, because the tool doesn't fit how you work.</p></div>
+      <div class="tension__item rv"><span class="tension__num">02</span><p class="tension__txt">Every hire costs another seat. Every year. Forever.</p></div>
+      <div class="tension__item rv"><span class="tension__num">03</span><p class="tension__txt">You asked for a change eight months ago. It is still on someone's roadmap.</p></div>
+    </div>
+
+    <p class="own__claim rv" style="margin-top:clamp(34px,5vw,56px)">On a licensed tool, a change is a request and a vote you don't attend.<br><em>Here you order it, and it ships the week after.</em></p>
+
+    <div class="own__grid">
+      <div class="own__item rv"><span class="own__k">Internal tool</span>
+        <p class="own__t">The one your teams live in all day, running on your own database.</p></div>
+      <div class="own__item rv"><span class="own__k">Client portal</span>
+        <p class="own__t">On your brand and your systems, not on an editor's.</p></div>
+      <div class="own__item rv"><span class="own__k">The critical spreadsheet</span>
+        <p class="own__t">The shared file twelve people edit and nobody dares break, turned into something that can't.</p></div>
+      <div class="own__item rv"><span class="own__k">Site, app, redesign</span>
+        <p class="own__t">What we already do. Same pipeline, different output.</p></div>
+    </div>
+
+    <p class="lead rv" style="margin-top:clamp(28px,4vw,44px);max-width:60ch">The code, the data and the hosting are yours. No seat count, no annual rise, no feature removed because it stopped fitting someone else's roadmap.</p>
+    <p class="dim rv" style="margin-top:20px;font-size:.85rem;max-width:64ch">We rebuild what you bent to make it fit. We don't rebuild payroll, accounting or a heavy CRM. If a mature product does the job, buy the product — we will tell you so on the call.</p>
+  </div>
+</section>
+
 <!-- COVERAGE -->
 <section class="cover" id="coverage" aria-label="What one brief covers">
   <div class="cover__stage">
@@ -1060,7 +1104,7 @@ footer{border-top:1px solid var(--line);padding-block:44px 56px;font-size:.875re
         <p class="muted" style="margin:0">Figma file, repo, deployment, domain. All of it transfers on final payment. We keep no licence and reuse nothing.</p></div>
       <div class="card rv"><svg class="card__ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#g-lock"/></svg>
         <h3 class="h3">Your client's data stays put</h3>
-        <p class="muted" style="margin:0">NDA before the brief. Nothing your client gives us trains anything, and production credentials never leave your accounts.</p></div>
+        <p class="muted" style="margin:0">NDA before the brief. Nothing your client gives us trains anything, and production credentials never leave your accounts. On internal tools: single sign-on, role-based access and a written data map before a line is built.</p></div>
     </div>
   </div>
 </section>
@@ -1081,7 +1125,8 @@ footer{border-top:1px solid var(--line);padding-block:44px 56px;font-size:.875re
         <p class="muted" style="margin:0">Eight days a month held for you. For steady overflow.</p>
         <p class="card__meta">Rolling, 30 days notice</p></article>
     </div>
-    <p class="dim rv" style="margin-top:26px;font-size:.85rem;max-width:60ch">Prices are for the work, not for hours. Nothing gets invoiced that you haven't approved on a quote first.</p>
+    <p class="lead rv" style="margin-top:30px;max-width:62ch">A tool that runs on your data is not a delivery, it is a service. <strong style="color:var(--fg);font-weight:600">Run</strong> covers hosting, monitoring and your change budget — so a modification is a week, not a roadmap. Quoted with the build.</p>
+    <p class="dim rv" style="margin-top:20px;font-size:.85rem;max-width:60ch">Prices are for the work, not for hours. Nothing gets invoiced that you haven't approved on a quote first.</p>
   </div>
 </section>
 
