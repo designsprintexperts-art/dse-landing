@@ -517,10 +517,42 @@
   .mosaic.entrance-run *{ animation:none !important; }
 }
 
+
+/* Tap feedback. -webkit-tap-highlight-color is transparent site-wide, so
+   without this a tap on the hamburger looks like nothing happened. */
+#menuBtn:active, #menuBtn2:active{ background-color:rgba(255,255,255,.18); }
 </style>
 </head>
 
 <body class="bg-[#080A19]">
+
+<!-- Mobile overlay. Enfant direct de <body>, et AVANT les scripts.
+     Dans le hero il heritait d'un ancetre position:relative + overflow:hidden,
+     ce que WebKit clippe parfois pour un descendant position:fixed. -->
+<!-- mobile overlay -->
+    <div id="sheet" class="lg:hidden fixed inset-0 z-40 invisible transition-all duration-500" style="transition-timing-function:cubic-bezier(0.32,0.72,0,1)">
+      <div id="sheetBackdrop" class="absolute inset-0 bg-[#080A19]/90 backdrop-blur-[24px] transition-opacity duration-500 opacity-0"></div>
+      <div id="sheetPanel"
+        class="absolute top-[76px] sm:top-[86px] left-4 right-4 sm:left-6 sm:right-6 bg-[rgba(17,16,15,0.6)] backdrop-blur-[30px] rounded-[20px] border border-white/[0.06] p-6 sm:p-8 transition-all duration-500 origin-top opacity-0 -translate-y-4 scale-[0.97]"
+        style="transition-timing-function:cubic-bezier(0.32,0.72,0,1)">
+        <div class="flex flex-col gap-1" id="sheetLinks">
+          <a href="#run" data-nav class="sheet-link nav-link flex items-center justify-between px-4 py-4 rounded-[12px] text-white/90 text-[18px] font-[450] hover:bg-white/[0.06] transition-all duration-300 opacity-0 -translate-x-3">How it runs
+            <svg class="w-4 h-4 opacity-50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </a>
+          <a href="#stages" data-nav class="sheet-link nav-link flex items-center justify-between px-4 py-4 rounded-[12px] text-white/90 text-[18px] font-[450] hover:bg-white/[0.06] transition-all duration-300 opacity-0 -translate-x-3">Design &amp; build</a>
+          <a href="#tools" data-nav class="sheet-link nav-link flex items-center justify-between px-4 py-4 rounded-[12px] text-white/90 text-[18px] font-[450] hover:bg-white/[0.06] transition-all duration-300 opacity-0 -translate-x-3">Own your tools</a>
+          <a href="#speed" data-nav class="sheet-link nav-link flex items-center justify-between px-4 py-4 rounded-[12px] text-white/90 text-[18px] font-[450] hover:bg-white/[0.06] transition-all duration-300 opacity-0 -translate-x-3">Speed</a>
+          <a href="#pricing" data-nav class="sheet-link nav-link flex items-center justify-between px-4 py-4 rounded-[12px] text-white/90 text-[18px] font-[450] hover:bg-white/[0.06] transition-all duration-300 opacity-0 -translate-x-3">Pricing</a>
+          <a href="#faq" data-nav class="sheet-link nav-link flex items-center justify-between px-4 py-4 rounded-[12px] text-white/90 text-[18px] font-[450] hover:bg-white/[0.06] transition-all duration-300 opacity-0 -translate-x-3">FAQ</a>
+        </div>
+        <div class="h-px bg-white/10 my-5"></div>
+        <div id="sheetCtas" class="flex flex-col gap-3 transition-all duration-300 opacity-0 translate-y-2">
+          <a href="#brief" class="w-full h-[50px] flex items-center justify-center bg-[#E9E9E9] rounded-[12px] text-[#0A0707] text-[15px] font-[450] transition-colors hover:bg-white">Send a brief</a>
+          <a href="fr/"    class="w-full h-[50px] flex items-center justify-center rounded-[12px] border border-white/30 text-white text-[15px] font-[450] transition-colors hover:bg-white/5">Version française</a>
+        </div>
+      </div>
+    </div>
+
 
 <!-- ============================================================= HERO -->
 <section id="top" class="relative w-full h-screen overflow-hidden bg-[#080A19]">
@@ -575,7 +607,7 @@
 
       <!-- hamburger -->
       <div class="lg:hidden opacity-0 animate-fade-down" style="animation-delay:100ms">
-        <button id="menuBtn" aria-label="Toggle menu" aria-expanded="false"
+        <button type="button" id="menuBtn" aria-label="Toggle menu" aria-expanded="false"
           class="w-[44px] h-[44px] flex items-center justify-center rounded-[11px] bg-[rgba(10,7,7,0.35)] backdrop-blur-[17px] transition-colors hover:bg-white/10">
           <span class="relative w-5 h-5 block">
             <svg id="iconMenu" class="w-5 h-5 text-white absolute inset-0 transition-all duration-300 ease-out opacity-100 rotate-0 scale-100" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
@@ -584,30 +616,6 @@
         </button>
       </div>
     </nav>
-
-    <!-- mobile overlay -->
-    <div id="sheet" class="lg:hidden fixed inset-0 z-40 invisible transition-all duration-500" style="transition-timing-function:cubic-bezier(0.32,0.72,0,1)">
-      <div id="sheetBackdrop" class="absolute inset-0 bg-[#080A19]/90 backdrop-blur-[24px] transition-opacity duration-500 opacity-0"></div>
-      <div id="sheetPanel"
-        class="absolute top-[76px] sm:top-[86px] left-4 right-4 sm:left-6 sm:right-6 bg-[rgba(17,16,15,0.6)] backdrop-blur-[30px] rounded-[20px] border border-white/[0.06] p-6 sm:p-8 transition-all duration-500 origin-top opacity-0 -translate-y-4 scale-[0.97]"
-        style="transition-timing-function:cubic-bezier(0.32,0.72,0,1)">
-        <div class="flex flex-col gap-1" id="sheetLinks">
-          <a href="#run" data-nav class="sheet-link nav-link flex items-center justify-between px-4 py-4 rounded-[12px] text-white/90 text-[18px] font-[450] hover:bg-white/[0.06] transition-all duration-300 opacity-0 -translate-x-3">How it runs
-            <svg class="w-4 h-4 opacity-50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
-          </a>
-          <a href="#stages" data-nav class="sheet-link nav-link flex items-center justify-between px-4 py-4 rounded-[12px] text-white/90 text-[18px] font-[450] hover:bg-white/[0.06] transition-all duration-300 opacity-0 -translate-x-3">Design &amp; build</a>
-          <a href="#tools" data-nav class="sheet-link nav-link flex items-center justify-between px-4 py-4 rounded-[12px] text-white/90 text-[18px] font-[450] hover:bg-white/[0.06] transition-all duration-300 opacity-0 -translate-x-3">Own your tools</a>
-          <a href="#speed" data-nav class="sheet-link nav-link flex items-center justify-between px-4 py-4 rounded-[12px] text-white/90 text-[18px] font-[450] hover:bg-white/[0.06] transition-all duration-300 opacity-0 -translate-x-3">Speed</a>
-          <a href="#pricing" data-nav class="sheet-link nav-link flex items-center justify-between px-4 py-4 rounded-[12px] text-white/90 text-[18px] font-[450] hover:bg-white/[0.06] transition-all duration-300 opacity-0 -translate-x-3">Pricing</a>
-          <a href="#faq" data-nav class="sheet-link nav-link flex items-center justify-between px-4 py-4 rounded-[12px] text-white/90 text-[18px] font-[450] hover:bg-white/[0.06] transition-all duration-300 opacity-0 -translate-x-3">FAQ</a>
-        </div>
-        <div class="h-px bg-white/10 my-5"></div>
-        <div id="sheetCtas" class="flex flex-col gap-3 transition-all duration-300 opacity-0 translate-y-2">
-          <a href="#brief" class="w-full h-[50px] flex items-center justify-center bg-[#E9E9E9] rounded-[12px] text-[#0A0707] text-[15px] font-[450] transition-colors hover:bg-white">Send a brief</a>
-          <a href="fr/"    class="w-full h-[50px] flex items-center justify-center rounded-[12px] border border-white/30 text-white text-[15px] font-[450] transition-colors hover:bg-white/5">Version française</a>
-        </div>
-      </div>
-    </div>
 
     <!-- ------------------------------------------------------ HERO BODY -->
     <div class="flex-1 flex items-center py-8">
@@ -668,7 +676,7 @@
 
       <div class="flex items-center gap-2 shrink-0">
         <a href="#brief" class="h-[38px] px-5 flex items-center bg-[#E9E9E9] rounded-[10px] text-[#0A0707] text-[13px] font-[450] leading-[13px] hover:bg-white transition-colors">Send a brief</a>
-        <button id="menuBtn2" aria-label="Toggle menu" aria-expanded="false"
+        <button type="button" id="menuBtn2" aria-label="Toggle menu" aria-expanded="false"
           class="lg:hidden w-[38px] h-[38px] flex items-center justify-center rounded-[10px] bg-white/[0.07] hover:bg-white/[0.12] transition-colors">
           <svg class="w-[18px] h-[18px] text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
         </button>
@@ -1553,44 +1561,72 @@
   const v = document.getElementById('runReel');
   const host = document.getElementById('run');
   const bar = document.getElementById('reelBar');
+  if (!v || !host) return;
   const band = v.closest('.plate');
-  if (!v || !host || !band) return;
+  if (!band) return;
 
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  let duration = 0, target = -1, ticking = false;
 
-  function onMeta(){
-    duration = v.duration || 0;
-    if (reduce) { try { v.currentTime = duration * 0.92; } catch (e) {} }   // hold the closing frame
-    else apply();
-  }
-  v.addEventListener('loadedmetadata', onMeta);
-  if (v.readyState >= 1) onMeta();
-
-  /* Prime the decoder once, off the critical path. The first seek into a fresh
-     video costs a visible frame; doing it here rather than on the reader's
-     first scroll keeps that cost out of the interaction. */
-  v.addEventListener('loadeddata', () => { try { v.currentTime = 0.05; } catch (e) {} }, { once: true });
+  /* Touch devices do not scrub. Seeking a paused <video> only paints on engines
+     that decode off the main pipeline; mobile Safari shows the poster instead,
+     and an iPhone will not keep three inline decoders alive at the same time.
+     So on a coarse pointer the reel just plays, looped and muted, while it is
+     on screen. The scroll bar keeps doing its job either way. */
+  const touch = matchMedia('(hover: none) and (pointer: coarse)').matches;
 
   /* Tied to the BAND, not the section. The band is pinned to the top of the
      section and leaves the viewport around 40% of the way through it; a curve
      spread over the whole section would play the closing shot after the footage
-     was already gone. This finishes while the band is still well on screen,
-     then holds it there until it scrolls out. */
+     was already gone. */
   function progress(){
     const vh = innerHeight, r = band.getBoundingClientRect();
     return Math.min(1, Math.max(0, (vh - r.top) / (r.height + vh * 0.06)));
   }
+  function drawBar(){ if (bar) bar.style.transform = 'scaleX(' + progress().toFixed(3) + ')'; }
+
+  if (touch || reduce) {
+    /* Not a loop. The clip was trimmed to end on the robot at its console, and
+       a loop would throw that away every 4.8s. It plays once when the band
+       arrives and then holds its last frame, which is the shot that matters. */
+    let started = false;
+    function start(){
+      if (started || reduce) return;
+      started = true;
+      const q = v.play();
+      if (q && q.catch) q.catch(() => { started = false; });
+    }
+    new IntersectionObserver((es) => {
+      if (es[0].isIntersecting) start();
+      else if (!v.ended) v.pause();
+      else return;
+    }, { rootMargin: '15% 0px' }).observe(host);
+    /* Fallback if the engine refuses muted inline autoplay (Low Power Mode on
+       iOS does exactly that): the reader's first touch anywhere unlocks it. */
+    addEventListener('touchstart', function once(){ removeEventListener('touchstart', once); start(); }, { passive: true });
+    if (reduce) v.addEventListener('loadeddata', () => { try { v.currentTime = (v.duration || 1) * 0.92; } catch (e) {} }, { once: true });
+    let tb = false;
+    addEventListener('scroll', () => { if (!tb) { tb = true; requestAnimationFrame(() => { tb = false; drawBar(); }); } }, { passive: true });
+    addEventListener('resize', drawBar);
+    drawBar();
+    return;
+  }
+
+  let duration = 0, target = -1, ticking = false;
+
+  function onMeta(){ duration = v.duration || 0; apply(); }
+  v.addEventListener('loadedmetadata', onMeta);
+  if (v.readyState >= 1) onMeta();
+
+  /* Prime the decoder once, off the critical path. */
+  v.addEventListener('loadeddata', () => { try { v.currentTime = 0.05; } catch (e) {} }, { once: true });
 
   function apply(){
     ticking = false;
-    if (!duration || reduce) return;
+    if (!duration) return;
     const p = progress();
     if (bar) bar.style.transform = 'scaleX(' + p.toFixed(3) + ')';
     const t = p * duration;
-    // Two frames of slack, not one. A full-bleed band is a large decode
-    // surface; seeking it on every animation frame during a fast fling is what
-    // produced the only long frames on the page.
+    // Two frames of slack, not one: a full-bleed band is a large decode surface.
     if (Math.abs(t - target) < 1 / 12) return;
     if (v.seeking) return;                       // never queue a seek on a seek
     target = t;
@@ -1603,6 +1639,19 @@
     else removeEventListener('scroll', onScroll);
   }, { rootMargin: '120% 0px' }).observe(host);
   addEventListener('resize', onScroll);
+})();
+
+/* ------------------------------------------------------------ DECODERS
+   Inline video decoders are a scarce resource on iPhone: three autoplaying
+   videos on one page means the later ones silently never get one and stay on
+   their poster. Each video now runs only while its own section is on screen. */
+(function decoders(){
+  const hero = document.querySelector('#top > video');
+  const top = document.getElementById('top');
+  if (!hero || !top) return;
+  new IntersectionObserver((es) => {
+    if (es[0].isIntersecting) hero.play().catch(() => {}); else hero.pause();
+  }, { threshold: 0 }).observe(top);
 })();
 
 /* ------------------------------------------------------------ PROCESSOR TRACES
